@@ -153,5 +153,3 @@ FL paper summary I have read in 2025
 
 ---
 
-Source: https://gemini.google.com/app/62a7e9d3b032095a
-Exported at: 2026-03-04T04:00:52.024Z
