@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>去中心化智能的前沿范式 - 联邦学习深度分析</title>
+    <!-- 引入 Noto Sans SC 字体 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <!-- 引入 Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Noto Sans SC"', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            900: '#1e3a8a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* 自定义滚动条 */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8; 
+        }
+        .table-wrap th {
+            position: sticky;
+            top: 0;
+            background-color: #f8fafc;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased selection:bg-primary-100 selection:text-primary-900">
+
+    <!-- 顶部导航条 -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <svg class="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                <span class="font-bold text-lg tracking-tight text-slate-900 truncate">Decentralized Intelligence Research</span>
+            </div>
+            <a href="#top" class="text-sm font-medium text-primary-600 hover:text-primary-700 transition-colors">返回顶部</a>
+        </div>
+    </header>
+
+    <!-- 页面头部 / Hero Section -->
+    <div class="bg-slate-900 text-white py-16 lg:py-24 relative overflow-hidden" id="top">
+        <div class="absolute inset-0 opacity-10 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAzNHYtNGgtMnY0aC00djJoNHY0aDJ2LTRoNHYtMmgtNHptMC0zMFYwaC0ydjRoLTR2Mmg0djRoMnYtNGg0VjRoLTR6TTYuNiAyNS40bC0yLjgtMi44LTEuNCAxLjQgMi44IDIuOC0yLjggMi44IDEuNCAxLjQgMi44LTIuOCAyLjggMi44IDEuNC0xLjQtMi44LTIuOCAyLjgtMi44LTEuNC0xLjQtMi44IDIuOHptMzIgMzJsLTIuOC0yLjgtMS40IDEuNCAyLjggMi44LTIuOCAyLjggMS40IDEuNCAyLjgtMi44IDIuOCAyLjggMS40LTEuNC0yLjgtMi44IDIuOC0yLjgtMS40LTEuNC0yLjggMi44ek02LjYgNi42bC0yLjgtMi44LTEuNCAxLjQgMi44IDIuOC0yLjggMi44IDEuNCAxLjQgMi44LTIuOCAyLjggMi44IDEuNC0xLjQtMi44LTIuOCAyLjgtMi44LTEuNC0xLjQtMi44IDIuOHoiIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMSIvPjwvZz48L3N2Zz4=')]"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <span class="inline-block py-1 px-3 rounded-full bg-primary-500/20 text-primary-200 text-sm font-semibold mb-4 border border-primary-500/30">Exhaustive Analysis Report</span>
+            <h1 class="text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tight mb-6 leading-tight">
+                Advanced Paradigms in Decentralized Intelligence: <br class="hidden lg:block">
+                <span class="text-primary-400">An Exhaustive Analysis of Federated Learning Optimization</span>
+            </h1>
+            <p class="text-lg md:text-xl text-slate-300 max-w-3xl leading-relaxed">
+                深入探讨联邦学习中的通信效能、异构性管理、系统鲁棒性及前沿架构创新。本报告对该领域的近期文献进行了详尽分析与精细分类。
+            </p>
+        </div>
+    </div>
+
+    <!-- 主体内容布局 -->
+    <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex flex-col lg:flex-row gap-12 relative">
+        
+        <!-- 左侧导航 (桌面端固定) -->
+        <aside class="hidden lg:block w-72 flex-shrink-0">
+            <div class="sticky top-24 bg-white rounded-xl shadow-sm border border-slate-100 p-6">
+                <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4">目录导览 (Contents)</h4>
+                <nav class="space-y-1 text-sm font-medium" id="toc-nav">
+                    <a href="#sec-1" class="block py-2 px-3 rounded-md text-slate-600 hover:bg-slate-50 hover:text-primary-600 transition-colors">1. 摘要 (Executive Summary)</a>
+                    <a href="#sec-2" class="block py-2 px-3 rounded-md text-slate-600 hover:bg-slate-50 hover:text-primary-600 transition-colors">2. 领域文献分类体系</a>
+                    <a href="#sec-3" class="block py-2 px-3 rounded-md text-slate-600 hover:bg-slate-50 hover:text-primary-600 transition-colors">3. 通信效能与架构优化</a>
+                    <div class="pl-4 space-y-1 border-l-2 border-slate-100 ml-3 my-1">
+                        <a href="#sec-3-1" class="block py-1.5 px-3 rounded-md text-slate-500 hover:text-primary-600">3.1 梯度压缩与量化优化</a>
+                        <a href="#sec-3-2" class="block py-1.5 px-3 rounded-md text-slate-500 hover:text-primary-600">3.2 块级剪枝与网络架构解耦</a>
+                        <a href="#sec-3-3" class="block py-1.5 px-3 rounded-md text-slate-500 hover:text-primary-600">3.3 文献提取表</a>
+                    </div>
+                    <a href="#sec-4" class="block py-2 px-3 rounded-md text-slate-600 hover:bg-slate-50 hover:text-primary-600 transition-colors">4. 统计异质性与自适应个性化</a>
+                    <div class="pl-4 space-y-1 border-l-2 border-slate-100 ml-3 my-1">
+                        <a href="#sec-4-1" class="block py-1.5 px-3 rounded-md text-slate-500 hover:text-primary-600">4.1 缓解类别不平衡与漂移</a>
+                        <a href="#sec-4-2" class="block py-1.5 px-3 rounded-md text-slate-500 hover:text-primary-600">4.2 客户端选择机制与异构聚类</a>
+                        <a href="#sec-4-3" class="block py-1.5 px-3 rounded-md text-slate-500 hover:text-primary-600">4.3 联邦基础模型与微调</a>
+                        <a href="#sec-4-4" class="block py-1.5 px-3 rounded-md text-slate-500 hover:text-primary-600">4.4 文献提取表</a>
+                    </div>
+                    <a href="#sec-5" class="block py-2 px-3 rounded-md text-slate-600 hover:bg-slate-50 hover:text-primary-600 transition-colors">5. 系统鲁棒性、隐私保护与控制</a>
+                    <div class="pl-4 space-y-1 border-l-2 border-slate-100 ml-3 my-1">
+                        <a href="#sec-5-1" class="block py-1.5 px-3 rounded-md text-slate-500 hover:text-primary-600">5.1 设备可靠性评估</a>
+                        <a href="#sec-5-2" class="block py-1.5 px-3 rounded-md text-slate-500 hover:text-primary-600">5.2 隐私保护与机器遗忘</a>
+                        <a href="#sec-5-3" class="block py-1.5 px-3 rounded-md text-slate-500 hover:text-primary-600">5.3 文献提取表</a>
+                    </div>
+                    <a href="#sec-6" class="block py-2 px-3 rounded-md text-slate-600 hover:bg-slate-50 hover:text-primary-600 transition-colors">6. 多维度深层洞察与演进趋势</a>
+                    <a href="#sec-7" class="block py-2 px-3 rounded-md text-slate-600 hover:bg-slate-50 hover:text-primary-600 transition-colors">7. 结论性综合</a>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- 右侧阅读区 -->
+        <main class="flex-1 min-w-0 bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-10 lg:p-12">
+            
+            <!-- Section 1 -->
+            <section id="sec-1" class="mb-16 scroll-mt-24">
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-primary-100 text-primary-700 font-bold">1</span>
+                    <h2 class="text-2xl font-bold text-slate-900">Executive Summary (执行摘要)</h2>
+                </div>
+                <div class="prose prose-slate max-w-none text-slate-700 leading-relaxed space-y-4">
+                    <p>从集中式数据处理向去中心化、隐私保护的机器学习演进，催生了联邦学习（Federated Learning, FL）研究的爆发。作为一种基于本地数据孤岛进行全局模型更新且无需暴露原始信息的机制，FL 正在快速演进以应对深层的系统性瓶颈。</p>
+                    <p>当前分布式智能的格局受到三个关键维度的交织影响：</p>
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li><strong class="text-slate-900">网络带宽与边缘计算硬件</strong>的物理局限；</li>
+                        <li><strong class="text-slate-900">非独立同分布（non-IID）</strong>数据架构的统计现实；</li>
+                        <li>在对抗性攻击与硬件故障下维持<strong class="text-slate-900">系统鲁棒性</strong>的迫切需求。</li>
+                    </ul>
+                    <p>本报告对该领域的近期文献进行了详尽分析，细致解构了旨在解决这些多层面瓶颈的理论框架、数学模型以及架构创新。通过系统性提取大量近期研究背后的动机、面临的技术挑战、应用方法与核心创新点，本文构建了当前前沿技术的精细分类体系。</p>
+                </div>
+            </section>
+
+            <hr class="border-slate-100 my-10">
+
+            <!-- Section 2 -->
+            <section id="sec-2" class="mb-16 scroll-mt-24">
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-primary-100 text-primary-700 font-bold">2</span>
+                    <h2 class="text-2xl font-bold text-slate-900">领域文献分类体系</h2>
+                </div>
+                <p class="text-slate-700 mb-6 leading-relaxed">为建立结构化的分析框架，根据文献的核心优化目标，我们将近期研究划分为三个细化的子类：</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-slate-50 border border-slate-200 rounded-xl p-5 hover:shadow-md transition-shadow">
+                        <div class="w-10 h-10 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mb-4">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                        </div>
+                        <h3 class="font-bold text-slate-900 mb-2">通信效能与架构优化</h3>
+                        <p class="text-sm text-slate-600 leading-relaxed">涵盖旨在最小化传输梯度负载、减少边缘计算开销以及重构模型同步流程（如量化、稀疏化、剪枝和拆分学习拓扑）的研究。</p>
+                    </div>
+                    <div class="bg-slate-50 border border-slate-200 rounded-xl p-5 hover:shadow-md transition-shadow">
+                        <div class="w-10 h-10 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center mb-4">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                        </div>
+                        <h3 class="font-bold text-slate-900 mb-2">统计异质性与自适应个性化</h3>
+                        <p class="text-sm text-slate-600 leading-relaxed">重点剖析旨在调和 non-IID 数据分布导致的发散问题的机制，包括类别不平衡缓解、动态加权客户端选择以及新兴的联邦基础模型微调。</p>
+                    </div>
+                    <div class="bg-slate-50 border border-slate-200 rounded-xl p-5 hover:shadow-md transition-shadow">
+                        <div class="w-10 h-10 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mb-4">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                        </div>
+                        <h3 class="font-bold text-slate-900 mb-2">系统鲁棒性、隐私保护与控制</h3>
+                        <p class="text-sm text-slate-600 leading-relaxed">详细阐述用于保护网络免受拜占庭攻击、意外数据泄露、不可靠设备掉线影响的协议，以及实时反馈控制系统的数学整合。</p>
+                    </div>
+                </div>
+            </section>
+
+            <hr class="border-slate-100 my-10">
+
+            <!-- Section 3 -->
+            <section id="sec-3" class="mb-16 scroll-mt-24">
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-primary-100 text-primary-700 font-bold">3</span>
+                    <h2 class="text-2xl font-bold text-slate-900">Category I: 通信效能与架构优化</h2>
+                </div>
+                <p class="text-slate-700 leading-relaxed mb-8">去中心化训练的根本瓶颈在于带宽受限的网络中传输大规模参数模型的高昂成本。随着模型从百万参数级扩展至百亿参数级，简单的全量同步在数学与物理上均不可行。文献表明，当前的重点已大规模转向高级有损压缩技术（特别是量化与剪枝），并辅以误差补偿协议，以防止收敛界限的劣化。</p>
+
+                <div id="sec-3-1" class="mb-8 scroll-mt-24">
+                    <h3 class="text-xl font-bold text-slate-800 mb-4 border-l-4 border-primary-500 pl-3">3.1 梯度压缩与量化优化</h3>
+                    <div class="prose prose-slate max-w-none text-slate-700">
+                        <p>量化技术降低了权重更新浮点表示的精度。然而，多篇文献指出的核心挑战在于量化误差的累积会严重扭曲全局目标函数。<strong class="text-slate-900">TLAQC (Two-layer accumulated quantized compression)</strong> 理论框架对此进行了明确应对。TLAQC 通过累积量化误差和保留的权重增量（Weight Deltas）来缓解精度损失，这本质上充当了一个内存缓冲区，将丢弃的梯度信息注入到随后的训练轮次中。经验评估表明，这能显著降低平均量化误差，同时保持高水平的通信压缩。</p>
+                        <p>在动态量化领域，静态量化范围无法捕获梯度不断演变的方差。诸如 <strong class="text-slate-900">DAdaQuant</strong> 这样的双重自适应量化技术，针对早期轮次中因高梯度方差导致的溢出或严重截断问题，通过每轮动态调整量化位宽和截断阈值来实现通信效率的最大化。更进一步，<strong class="text-slate-900">FracBits</strong> 指出硬件仅原生支持离散整数精度（如 INT4, INT8），因此通过在相邻整数精度间进行随机切换，模拟了更细粒度的小数位宽量化。</p>
+                        <p>对于不同的训练阶段，<strong class="text-slate-900">FedDQ</strong> 提出与全局梯度范数成比例单调递减量化级别的策略。针对网络层间的统计差异，<strong class="text-slate-900">FedLAQ</strong> 提出了逐层分桶 (Layer-wise Bucketing) 策略；而 <strong class="text-slate-900">FedFQ</strong> 进一步细化，通过将层划分为微块并为每个子矩阵分配独立的缩放因子，解决了层内异常权重导致的失真问题。在混合精度和硬件感知层面，<strong class="text-slate-900">FedHQ</strong> 则将算法量化与本地 NPU 的异构硬件精度约束对齐。</p>
+                    </div>
+                </div>
+
+                <div id="sec-3-2" class="mb-10 scroll-mt-24">
+                    <h3 class="text-xl font-bold text-slate-800 mb-4 border-l-4 border-primary-500 pl-3">3.2 块级剪枝、稀疏化与网络架构解耦</h3>
+                    <div class="prose prose-slate max-w-none text-slate-700">
+                        <p>通过剪枝完全移除冗余参数提供了平行的优化路径。主要挑战在于传统剪枝往往忽略了输入数据的特征敏感性，从而降低了模型效用。高级框架采用了<strong class="text-slate-900">敏感度感知和块级剪枝</strong>，通过计算相对于输入的梯度敏感度并结合特征重组，减少通道冗余。</p>
+                        <p>针对深度神经网络功能冗余的问题，<strong class="text-slate-900">FEDLWS</strong> 避免了硬剪枝过早破坏特征路径，而是基于层敏感度动态应用 L1/L2 正则化迫使权重归零。同时，在跨客户端通信中，<strong class="text-slate-900">FetchSGD</strong> 采用 Count-Sketch 矩阵投影技术将庞大梯度向量投影到低维草图空间。</p>
+                        <p>架构的去中心化甚至已扩展到物理网络基础设施本身。<strong class="text-slate-900">基于投票的共识模型压缩</strong> 实现了网络内联邦学习 (In-Network FL)，其中聚合直接发生在可编程网络交换机上。针对移动边缘计算，<strong class="text-slate-900">Heroes</strong> 框架引入了神经组合 (Neural Composition) 技术利用低秩张量构建尺寸可调的模型，<strong class="text-slate-900">BOSE</strong> 与 <strong class="text-slate-900">C2-SFL</strong> 则进一步探索了块级模型拆分与传输。</p>
+                    </div>
+                </div>
+
+                <div id="sec-3-3" class="scroll-mt-24">
+                    <h3 class="text-xl font-bold text-slate-800 mb-4 flex items-center gap-2">
+                        <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M3 14h18m-9-4v8m-7 0h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                        3.3 文献提取：通信效能与架构优化
+                    </h3>
+                    <div class="table-wrap overflow-x-auto border border-slate-200 rounded-xl shadow-sm">
+                        <table class="min-w-full text-left text-sm whitespace-nowrap">
+                            <thead class="text-slate-600 bg-slate-50 border-b border-slate-200">
+                                <tr>
+                                    <th class="px-4 py-3 font-semibold min-w-[200px]">Paper Title</th>
+                                    <th class="px-4 py-3 font-semibold min-w-[150px]">Keywords</th>
+                                    <th class="px-4 py-3 font-semibold min-w-[250px]">Motivation / Challenge</th>
+                                    <th class="px-4 py-3 font-semibold min-w-[200px]">Method & Innovation</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-200 bg-white">
+                                <tr class="hover:bg-slate-50/50">
+                                    <td class="px-4 py-3 text-slate-900 font-medium whitespace-normal">A Sensitivity-aware and Block-wise Pruning Method...</td>
+                                    <td class="px-4 py-3 text-primary-600">Pruning, Privacy, Sparsity, Feature Selection</td>
+                                    <td class="px-4 py-3 text-slate-600 whitespace-normal">传统剪枝忽略了特征选择对模型效用的影响。</td>
+                                    <td class="px-4 py-3 text-slate-700 whitespace-normal"><span class="font-semibold text-slate-900">敏感度感知块级剪枝:</span> 定义了相对于输入的梯度敏感度，动态优化子网络选择。</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50/50">
+                                    <td class="px-4 py-3 text-slate-900 font-medium whitespace-normal">A Tutorial on Quantized Feedback Control</td>
+                                    <td class="px-4 py-3 text-primary-600">Quantization, Control, Networked Systems</td>
+                                    <td class="px-4 py-3 text-slate-600 whitespace-normal">带宽限制阻碍了连续的高精度反馈信号传输。</td>
+                                    <td class="px-4 py-3 text-slate-700 whitespace-normal"><span class="font-semibold text-slate-900">静态/动态量化；无记忆量化:</span> 系统性地映射了对数级量化器在 LTI 系统中的稳定性边界。</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50/50">
+                                    <td class="px-4 py-3 text-slate-900 font-medium whitespace-normal">Accelerated Distributed Aggregative Optimization</td>
+                                    <td class="px-4 py-3 text-primary-600">Aggregative Optimization, Gradient Tracking</td>
+                                    <td class="px-4 py-3 text-slate-600 whitespace-normal">大规模多智能体协调中的高通信负载。</td>
+                                    <td class="px-4 py-3 text-slate-700 whitespace-normal"><span class="font-semibold text-slate-900">结合 Nesterov 动量的压缩梯度追踪:</span> 在强凸目标函数和压缩通信下实现线性收敛率。</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50/50">
+                                    <td class="px-4 py-3 text-slate-900 font-medium whitespace-normal">BiPruneFL</td>
+                                    <td class="px-4 py-3 text-primary-600">Binary Quantization, Pruning</td>
+                                    <td class="px-4 py-3 text-slate-600 whitespace-normal">极端量化与剪枝结合导致的级联精度损失。</td>
+                                    <td class="px-4 py-3 text-slate-700 whitespace-normal"><span class="font-semibold text-slate-900">联合二值量化与稀疏剪枝:</span> 在聚合前本地联合优化剪枝掩码与二值缩放因子。</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50/50">
+                                    <td class="px-4 py-3 text-slate-900 font-medium whitespace-normal">Blade</td>
+                                    <td class="px-4 py-3 text-primary-600">Asynchronous FL, Stragglers</td>
+                                    <td class="px-4 py-3 text-slate-600 whitespace-normal">平衡硬件利用率与统计效率。</td>
+                                    <td class="px-4 py-3 text-slate-700 whitespace-normal"><span class="font-semibold text-slate-900">感知陈旧度的异步聚合:</span> 基于持续评估的陈旧度指数，动态调整全局更新步调。</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50/50">
+                                    <td class="px-4 py-3 text-slate-900 font-medium whitespace-normal">BOSE</td>
+                                    <td class="px-4 py-3 text-primary-600">Block-Wise FL, Heterogeneous Edge</td>
+                                    <td class="px-4 py-3 text-slate-600 whitespace-normal">拆分模型引入显著延迟和特征退化。</td>
+                                    <td class="px-4 py-3 text-slate-700 whitespace-normal"><span class="font-semibold text-slate-900">块级模型拆分与传输:</span> 独立训练神经网络块并实现局部误差传播。</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50/50">
+                                    <td class="px-4 py-3 text-slate-900 font-medium whitespace-normal">C2-SFL</td>
+                                    <td class="px-4 py-3 text-primary-600">Split FL, MEC, Cost-Aware</td>
+                                    <td class="px-4 py-3 text-slate-600 whitespace-normal">在异构节点拆分模型时平衡数据分布。</td>
+                                    <td class="px-4 py-3 text-slate-700 whitespace-normal"><span class="font-semibold text-slate-900">类别均衡且考虑成本的拆分学习:</span> 为拆分点选择与类别不平衡建立联合优化问题。</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50/50">
+                                    <td class="px-4 py-3 text-slate-900 font-medium whitespace-normal">DAdaQuant</td>
+                                    <td class="px-4 py-3 text-primary-600">Doubly-adaptive Quantization</td>
+                                    <td class="px-4 py-3 text-slate-600 whitespace-normal">早期轮次的高梯度方差导致溢出或严重截断。</td>
+                                    <td class="px-4 py-3 text-slate-700 whitespace-normal"><span class="font-semibold text-slate-900">双重自适应量化:</span> 每轮动态调整量化位宽与截断阈值。</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50/50">
+                                    <td class="px-4 py-3 text-slate-900 font-medium whitespace-normal">EF21</td>
+                                    <td class="px-4 py-3 text-primary-600">Error Feedback, Gradient Compression</td>
+                                    <td class="px-4 py-3 text-slate-600 whitespace-normal">现有误差反馈未能严格修复 SignSGD 的发散。</td>
+                                    <td class="px-4 py-3 text-slate-700 whitespace-normal"><span class="font-semibold text-slate-900">简化的误差反馈 (EF21):</span> 提供更紧凑收敛率的马尔可夫误差反馈。</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50/50">
+                                    <td class="px-4 py-3 text-slate-900 font-medium whitespace-normal">Expediting In-Network FL...</td>
+                                    <td class="px-4 py-3 text-primary-600">In-Network Computing, Consensus</td>
+                                    <td class="px-4 py-3 text-slate-600 whitespace-normal">网络交换机内存受限，仅支持简单整数聚合。</td>
+                                    <td class="px-4 py-3 text-slate-700 whitespace-normal"><span class="font-semibold text-slate-900">基于投票的共识 (FediAC):</span> 两阶段协议：先使用 0-1 数组进行索引投票，再传输稀疏更新。</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50/50">
+                                    <td class="px-4 py-3 text-slate-900 font-medium whitespace-normal">Heroes</td>
+                                    <td class="px-4 py-3 text-primary-600">Neural Composition, Adaptive Update</td>
+                                    <td class="px-4 py-3 text-slate-600 whitespace-normal">同一模型结构无法适应高度异构的边缘设备。</td>
+                                    <td class="px-4 py-3 text-slate-700 whitespace-normal"><span class="font-semibold text-slate-900">增强的神经组合与自适应局部更新:</span> 利用低秩张量构建尺寸可调模型，并动态调整局部更新频率。</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50/50">
+                                    <td class="px-4 py-3 text-slate-900 font-medium whitespace-normal">Two-layer accumulated quantized compression (TLAQC)</td>
+                                    <td class="px-4 py-3 text-primary-600">Quantization Error, Two-layer Accumulation</td>
+                                    <td class="px-4 py-3 text-slate-600 whitespace-normal">极端量化导致高精度损失及无效的零值映射。</td>
+                                    <td class="px-4 py-3 text-slate-700 whitespace-normal"><span class="font-semibold text-slate-900">TLAQC；最小因子变换:</span> 累积量化误差和保留的权重增量，极大降低精度损失。</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50/50">
+                                    <td class="px-4 py-3 text-slate-900 font-medium whitespace-normal">Communication Efficient FL with Adaptive Quantization</td>
+                                    <td class="px-4 py-3 text-primary-600">Adaptive Quantization, Bandwidth</td>
+                                    <td class="px-4 py-3 text-slate-600 whitespace-normal">精确预测每轮所需的最小精度。</td>
+                                    <td class="px-4 py-3 text-slate-700 whitespace-normal"><span class="font-semibold text-slate-900">依赖 Epoch 的自适应量化:</span> 随模型接近局部最优，动态缩小量化位宽。</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50/50">
+                                    <td class="px-4 py-3 text-slate-900 font-medium whitespace-normal">DoubleSqueeze</td>
+                                    <td class="px-4 py-3 text-primary-600">Parallel SGD, Error-Compensated</td>
+                                    <td class="px-4 py-3 text-slate-600 whitespace-normal">压缩服务器到客户端的广播破坏了全局同步。</td>
+                                    <td class="px-4 py-3 text-slate-700 whitespace-normal"><span class="font-semibold text-slate-900">双向误差补偿压缩:</span> 在客户端上传和服务器下载两侧均应用误差反馈。</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50/50">
+                                    <td class="px-4 py-3 text-slate-900 font-medium whitespace-normal">FedComLoc</td>
+                                    <td class="px-4 py-3 text-primary-600">Distributed Training, Sparse Models</td>
+                                    <td class="px-4 py-3 text-slate-600 whitespace-normal">在稀疏化本地通信的同时维持全局泛化。</td>
+                                    <td class="px-4 py-3 text-slate-700 whitespace-normal"><span class="font-semibold text-slate-900">稀疏和量化的分布式训练:</span> 将空间定位参数直接整合到稀疏化掩码中。</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50/50">
+                                    <td class="px-4 py-3 text-slate-900 font-medium whitespace-normal">FedDQ</td>
+                                    <td class="px-4 py-3 text-primary-600">Descending Quantization</td>
+                                    <td class="px-4 py-3 text-slate-600 whitespace-normal">在训练后期保持高精度收益递减。</td>
+                                    <td class="px-4 py-3 text-slate-700 whitespace-normal"><span class="font-semibold text-slate-900">递减量化:</span> 随全局梯度范数下降，单调减少量化级别。</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50/50">
+                                    <td class="px-4 py-3 text-slate-900 font-medium whitespace-normal">FedFQ</td>
+                                    <td class="px-4 py-3 text-primary-600">Fine-Grained Quantization</td>
+                                    <td class="px-4 py-3 text-slate-600 whitespace-normal">每层单一的缩放因子导致异常权重失真严重。</td>
+                                    <td class="px-4 py-3 text-slate-700 whitespace-normal"><span class="font-semibold text-slate-900">细粒度块量化:</span> 将层划分为微块，为每个子矩阵分配独立缩放因子。</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50/50">
+                                    <td class="px-4 py-3 text-slate-900 font-medium whitespace-normal">FedHQ</td>
+                                    <td class="px-4 py-3 text-primary-600">Hybrid Runtime Quantization</td>
+                                    <td class="px-4 py-3 text-slate-600 whitespace-normal">将算法量化与异构硬件精度约束对齐。</td>
+                                    <td class="px-4 py-3 text-slate-700 whitespace-normal"><span class="font-semibold text-slate-900">混合运行时量化:</span> 将本地模型动态编译为本地 NPU 支持的混合精度格式。</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50/50">
+                                    <td class="px-4 py-3 text-slate-900 font-medium whitespace-normal">FedLAQ</td>
+                                    <td class="px-4 py-3 text-primary-600">Layer-wise Bucketing</td>
+                                    <td class="px-4 py-3 text-slate-600 whitespace-normal">跨不同统计特征的层应用统一压缩掩码。</td>
+                                    <td class="px-4 py-3 text-slate-700 whitespace-normal"><span class="font-semibold text-slate-900">逐层分桶 (Layer-wise bucketing):</span> 按层将参数分组，基于桶内方差进行量化。</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50/50">
+                                    <td class="px-4 py-3 text-slate-900 font-medium whitespace-normal">FedLPS</td>
+                                    <td class="px-4 py-3 text-primary-600">Local Parameter Sharing, Multi-Task</td>
+                                    <td class="px-4 py-3 text-slate-600 whitespace-normal">在相关但不同的任务间无延迟协调参数共享。</td>
+                                    <td class="px-4 py-3 text-slate-700 whitespace-normal"><span class="font-semibold text-slate-900">局部参数共享 (Local Parameter Sharing):</span> 将模型分为共享特征提取器和任务特定保留的头部。</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50/50">
+                                    <td class="px-4 py-3 text-slate-900 font-medium whitespace-normal">FEDLWS</td>
+                                    <td class="px-4 py-3 text-primary-600">Layer-wise Weight Shrinking</td>
+                                    <td class="px-4 py-3 text-slate-600 whitespace-normal">硬剪枝过早地彻底破坏特定特征路径。</td>
+                                    <td class="px-4 py-3 text-slate-700 whitespace-normal"><span class="font-semibold text-slate-900">自适应逐层权重收缩:</span> 基于层敏感度动态应用 L1/L2 正则化迫使权重归零。</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50/50">
+                                    <td class="px-4 py-3 text-slate-900 font-medium whitespace-normal">FedMPQ</td>
+                                    <td class="px-4 py-3 text-primary-600">Multi-codebook Quantization, Security</td>
+                                    <td class="px-4 py-3 text-slate-600 whitespace-normal">在不泄漏本地数据集统计特性的前提下压缩。</td>
+                                    <td class="px-4 py-3 text-slate-700 whitespace-normal"><span class="font-semibold text-slate-900">多码本乘积量化:</span> 使用随机正交码本编码梯度，掩盖统计特征。</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50/50">
+                                    <td class="px-4 py-3 text-slate-900 font-medium whitespace-normal">FedZipper</td>
+                                    <td class="px-4 py-3 text-primary-600">Statistical Heterogeneity, Layer-wise</td>
+                                    <td class="px-4 py-3 text-slate-600 whitespace-normal">统一层压缩破坏了客户端特定的发散路径。</td>
+                                    <td class="px-4 py-3 text-slate-700 whitespace-normal"><span class="font-semibold text-slate-900">逐层量化压缩框架:</span> 基于统计异质性指标压缩参数，保留个性化路径。</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50/50">
+                                    <td class="px-4 py-3 text-slate-900 font-medium whitespace-normal">FetchSGD</td>
+                                    <td class="px-4 py-3 text-primary-600">Sketching, Count-Sketch</td>
+                                    <td class="px-4 py-3 text-slate-600 whitespace-normal">维护误差累积缓冲区需要高内存占用。</td>
+                                    <td class="px-4 py-3 text-slate-700 whitespace-normal"><span class="font-semibold text-slate-900">Count-Sketch 矩阵投影:</span> 将梯度投影到低维草图空间，由服务器提取高频特征。</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50/50">
+                                    <td class="px-4 py-3 text-slate-900 font-medium whitespace-normal">FracBits</td>
+                                    <td class="px-4 py-3 text-primary-600">Mixed Precision, Fractional Bit-Widths</td>
+                                    <td class="px-4 py-3 text-slate-600 whitespace-normal">硬件原生仅支持离散整数精度。</td>
+                                    <td class="px-4 py-3 text-slate-700 whitespace-normal"><span class="font-semibold text-slate-900">分数位宽量化:</span> 通过在相邻整数精度间随机切换模拟分数位宽。</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <hr class="border-slate-100 my-10">
+
+            <!-- Section 4 -->
+            <section id="sec-4" class="mb-16 scroll-mt-24">
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-primary-100 text-primary-700 font-bold">4</span>
+                    <h2 class="text-2xl font-bold text-slate-900">Category II: 统计异质性与自适应个性化</h2>
+                </div>
+                <p class="text-slate-700 leading-relaxed mb-8">独立同分布 (IID) 的假设在真实的边缘部署中是不存在的。设备收集的数据受用户行为、地理位置和时间变量的严重偏差影响。这种 non-IID 特性导致客户端模型向不同局部最优发散，产生的权重背离严重降低了聚合全局模型的性能。</p>
+
+                <div id="sec-4-1" class="mb-8 scroll-mt-24">
+                    <h3 class="text-xl font-bold text-slate-800 mb-4 border-l-4 border-primary-500 pl-3">4.1 缓解类别不平衡与客户端漂移 (Client Drift)</h3>
+                    <div class="prose prose-slate max-w-none text-slate-700">
+                        <p>权重背离的一个主要驱动因素是类别不平衡。<strong class="text-slate-900">Fed-CBS</strong> 框架通过设计异构感知的采样机制来应对。它制定了一个类别不平衡度量标准，利用同态加密以保护隐私的方式安全推导该度量。通过计算高效的采样，Fed-CBS 刻意选择能共同生成完全类别均衡数据集的客户端子集。</p>
+                        <p>或者，可以通过局部干预在传输前防止漂移。<strong class="text-slate-900">FLY-SMOTE</strong> 框架通过在边缘直接注入合成数据来处理 non-IID 特征。客户端在本地计算少数类与多数类的比例，应用修改后的合成少数类过采样技术 (SMOTE)，在本地重新平衡训练分布。此外，<strong class="text-slate-900">Distribution-Regularized FL</strong> 利用 Wasserstein 距离作为全局与局部 Logit 间的正则化项，将局部模型拉回全局流形。</p>
+                    </div>
+                </div>
+
+                <div id="sec-4-2" class="mb-8 scroll-mt-24">
+                    <h3 class="text-xl font-bold text-slate-800 mb-4 border-l-4 border-primary-500 pl-3">4.2 客户端选择机制与异构聚类</h3>
+                    <div class="prose prose-slate max-w-none text-slate-700">
+                        <p>动态贡献评估模型 <strong class="text-slate-900">AdaFL</strong> 通过从小型选择池开始并逐渐扩大规模优化了静态客户端选择的弊端。它使用加权线性函数计算动态贡献分数，融合当前性能指标与历史轮次数据，确保通信带宽被分配给提供最大梯度新颖性的设备。</p>
+                        <p>由于强制将单一全局模型应用于互斥的数据任务是破坏性的，<strong class="text-slate-900">FedGroup</strong> 无需访问本地数据，仅通过计算上传参数更新的余弦相似度即可将客户端聚类。而 <strong class="text-slate-900">FedAWA</strong> 则将高昂矩阵比较开销转化为投影低维向量。</p>
+                    </div>
+                </div>
+
+                <div id="sec-4-3" class="mb-8 scroll-mt-24">
+                    <h3 class="text-xl font-bold text-slate-800 mb-4 border-l-4 border-primary-500 pl-3">4.3 联邦基础模型 (Foundation Models) 与推测解码</h3>
+                    <div class="prose prose-slate max-w-none text-slate-700">
+                        <p>将大型语言模型 (LLMs) 集成到联邦架构中面临着极端延迟挑战。<strong class="text-slate-900">HAT</strong> 框架重构了推理流水线以保护提示词隐私并消除延迟。它通过“提示词分块”打破限制，并利用并行推测解码 (Speculative Decoding)，边缘设备在等待服务器验证的同时在本地草拟可能的词元序列，缩减了首次词元延迟。</p>
+                        <p>在微调领域，<strong class="text-slate-900">FedICU</strong> 重新定义了 non-IID 约束下的参数高效微调 (PEFT)。它明确地将客户端更新分解为共识 (Consensus) 和发散 (Divergence) 组件，实施重要性感知参数更新掩码，确保仅上传具有统计显著性的权重偏差，防止基础模型的灾难性遗忘。类似地，<strong class="text-slate-900">FedBip</strong> 利用任务向量相似性逐层聚合客户端级微调。</p>
+                    </div>
+                </div>
+
+                <div id="sec-4-4" class="scroll-mt-24">
+                    <h3 class="text-xl font-bold text-slate-800 mb-4 flex items-center gap-2">
+                        <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M3 14h18m-9-4v8m-7 0h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                        4.4 文献提取：统计异质性与个性化
+                    </h3>
+                    <div class="table-wrap overflow-x-auto border border-slate-200 rounded-xl shadow-sm">
+                        <table class="min-w-full text-left text-sm whitespace-nowrap">
+                            <thead class="text-slate-600 bg-slate-50 border-b border-slate-200">
+                                <tr>
+                                    <th class="px-4 py-3 font-semibold min-w-[200px]">Paper Title</th>
+                                    <th class="px-4 py-3 font-semibold min-w-[150px]">Keywords</th>
+                                    <th class="px-4 py-3 font-semibold min-w-[250px]">Motivation / Challenge</th>
+                                    <th class="px-4 py-3 font-semibold min-w-[200px]">Method & Innovation</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-200 bg-white">
+                                <tr class="hover:bg-slate-50/50">
+                                    <td class="px-4 py-3 text-slate-900 font-medium whitespace-normal">A Novel Hat-Shaped Device-Cloud Collaborative Inference Framework...</td>
+                                    <td class="px-4 py-3 text-primary-600">LLMs, Device-Cloud, Speculative Decoding</td>
+                                    <td class="px-4 py-3 text-slate-600 whitespace-normal">长 Prompt 产生海量隐藏状态，导致极端延迟。</td>
+                                    <td class="px-4 py-3 text-slate-700 whitespace-normal"><span class="font-semibold text-slate-900">HAT 框架；提示词分块；并行草拟:</span> 最大化设备传输与云端计算的重叠；边缘进行推测性词元草拟。</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50/50">
+                                    <td class="px-4 py-3 text-slate-900 font-medium whitespace-normal">AdaFL: Adaptive Client Selection...</td>
+                                    <td class="px-4 py-3 text-primary-600">Client Selection, Contribution Evaluation</td>
+                                    <td class="px-4 py-3 text-slate-600 whitespace-normal">仅基于不稳定的过去表现评估客户端未来效用。</td>
+                                    <td class="px-4 py-3 text-slate-700 whitespace-normal"><span class="font-semibold text-slate-900">基于奖励的收益策略；加权线性函数:</span> 融合历史和当前性能指标，使用权重衰减动态调整选择池。</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50/50">
+                                    <td class="px-4 py-3 text-slate-900 font-medium whitespace-normal">Bi-level Personalization for Federated Foundation Models...</td>
+                                    <td class="px-4 py-3 text-primary-600">Foundation Models, Task-vector Aggregation</td>
+                                    <td class="px-4 py-3 text-slate-600 whitespace-normal">在深度任务个性化与维持基础能力间取得平衡。</td>
+                                    <td class="px-4 py-3 text-slate-700 whitespace-normal"><span class="font-semibold text-slate-900">双层个性化 (FedBip)；任务向量:</span> 计算逐层任务向量，在服务器端聚合时过滤掉冲突知识。</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50/50">
+                                    <td class="px-4 py-3 text-slate-900 font-medium whitespace-normal">Fed-CBS</td>
+                                    <td class="px-4 py-3 text-primary-600">Class-Imbalance, Client Sampling</td>
+                                    <td class="px-4 py-3 text-slate-600 whitespace-normal">在不暴露本地标签分布的情况下衡量全局类别不平衡。</td>
+                                    <td class="px-4 py-3 text-slate-700 whitespace-normal"><span class="font-semibold text-slate-900">联邦类别均衡采样；同态加密:</span> 安全计算标签偏斜并刻意采样特定客户端组合以产生均衡批次。</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50/50">
+                                    <td class="px-4 py-3 text-slate-900 font-medium whitespace-normal">FLY-SMOTE</td>
+                                    <td class="px-4 py-3 text-primary-600">Non-IID Data, SMOTE, Edge Computing</td>
+                                    <td class="px-4 py-3 text-slate-600 whitespace-normal">严格不共享原始数据的前提下纠正数据分布。</td>
+                                    <td class="px-4 py-3 text-slate-700 whitespace-normal"><span class="font-semibold text-slate-900">FLY-SMOTE；本地合成生成:</span> 本地计算少数/多数类比例，在边缘动态生成合成样本。</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50/50">
+                                    <td class="px-4 py-3 text-slate-900 font-medium whitespace-normal">Splitting with Importance-aware Updating... (FedICU)</td>
+                                    <td class="px-4 py-3 text-primary-600">LLMs, LoRA, Catastrophic Forgetting</td>
+                                    <td class="px-4 py-3 text-slate-600 whitespace-normal">上传全量 LoRA 矩阵覆盖了通用语言推理能力。</td>
+                                    <td class="px-4 py-3 text-slate-700 whitespace-normal"><span class="font-semibold text-slate-900">FedICU；共识/发散拆分:</span> 应用重要性感知掩码的稀疏更新，过滤掉不显著的 LoRA 参数。</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50/50">
+                                    <td class="px-4 py-3 text-slate-900 font-medium whitespace-normal">Adaptive Personalized FL for Non-IID Data...</td>
+                                    <td class="px-4 py-3 text-primary-600">Continual Distribution Shift</td>
+                                    <td class="px-4 py-3 text-slate-600 whitespace-normal">随着本地数据流形漂移，个性化模型变得过时。</td>
+                                    <td class="px-4 py-3 text-slate-700 whitespace-normal"><span class="font-semibold text-slate-900">持续个性化 FL:</span> 整合时间正则化项，衰减旧特征同时吸收新局部数据偏移。</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50/50">
+                                    <td class="px-4 py-3 text-slate-900 font-medium whitespace-normal">Addressing Class Imbalance in Federated Learning</td>
+                                    <td class="px-4 py-3 text-primary-600">Class Imbalance, Loss Reweighting</td>
+                                    <td class="px-4 py-3 text-slate-600 whitespace-normal">服务器无法查看全局分布来应用标准重加权。</td>
+                                    <td class="px-4 py-3 text-slate-700 whitespace-normal"><span class="font-semibold text-slate-900">不平衡感知聚合:</span> 通过监控梯度方向推断全局构成，并动态缩放损失函数。</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50/50">
+                                    <td class="px-4 py-3 text-slate-900 font-medium whitespace-normal">Capture Global Feature Statistics for One-Shot FL</td>
+                                    <td class="px-4 py-3 text-primary-600">One-Shot FL, Feature Statistics</td>
+                                    <td class="px-4 py-3 text-slate-600 whitespace-normal">在单一通信轮次内实现收敛。</td>
+                                    <td class="px-4 py-3 text-slate-700 whitespace-normal"><span class="font-semibold text-slate-900">全局特征统计聚合:</span> 客户端上传其特征空间方差的参数化表示，实现服务器端合成。</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50/50">
+                                    <td class="px-4 py-3 text-slate-900 font-medium whitespace-normal">Client Selection for Wireless FL...</td>
+                                    <td class="px-4 py-3 text-primary-600">Wireless Networks, Latency</td>
+                                    <td class="px-4 py-3 text-slate-600 whitespace-normal">联合优化最具信息量的数据与最快的物理连接。</td>
+                                    <td class="px-4 py-3 text-slate-700 whitespace-normal"><span class="font-semibold text-slate-900">延迟-数据联合优化:</span> 求解混合整数非线性规划，基于信道状态和数据方差选择客户端。</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50/50">
+                                    <td class="px-4 py-3 text-slate-900 font-medium whitespace-normal">Collaborative Learning of On-Device Small Model...</td>
+                                    <td class="px-4 py-3 text-primary-600">Knowledge Distillation, Asymmetric Models</td>
+                                    <td class="px-4 py-3 text-slate-600 whitespace-normal">在架构完全不同的神经网络间同步知识。</td>
+                                    <td class="px-4 py-3 text-slate-700 whitespace-normal"><span class="font-semibold text-slate-900">双向知识蒸馏:</span> 云模型向下传输软标签，边缘模型向上传输硬特征表示。</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50/50">
+                                    <td class="px-4 py-3 text-slate-900 font-medium whitespace-normal">Distribution-Regularized FL on Non-IID Data</td>
+                                    <td class="px-4 py-3 text-primary-600">Distribution Regularization</td>
+                                    <td class="px-4 py-3 text-slate-600 whitespace-normal">在不减缓收敛的情况下将局部模型拉回全局模型。</td>
+                                    <td class="px-4 py-3 text-slate-700 whitespace-normal"><span class="font-semibold text-slate-900">分布正则化:</span> 应用 Wasserstein 距离作为全局和局部 Logit 间的正则化器。</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50/50">
+                                    <td class="px-4 py-3 text-slate-900 font-medium whitespace-normal">Fast-Convergent FL with Adaptive Weighting</td>
+                                    <td class="px-4 py-3 text-primary-600">Adaptive Aggregation, Convergence</td>
+                                    <td class="px-4 py-3 text-slate-600 whitespace-normal">大数据量但低质量数据的客户端主导了模型。</td>
+                                    <td class="px-4 py-3 text-slate-700 whitespace-normal"><span class="font-semibold text-slate-900">基于损失地形的自适应加权:</span> 基于局部模型损失地形平滑度的倒数动态重加权。</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50/50">
+                                    <td class="px-4 py-3 text-slate-900 font-medium whitespace-normal">FedAWA</td>
+                                    <td class="px-4 py-3 text-primary-600">Client Vectors, Aggregation Weights</td>
+                                    <td class="px-4 py-3 text-slate-600 whitespace-normal">服务器端分析数百万权重的计算成本过高。</td>
+                                    <td class="px-4 py-3 text-slate-700 whitespace-normal"><span class="font-semibold text-slate-900">使用客户端向量的自适应加权:</span> 将客户端模型差异投影到低维向量以快速计算聚合系数。</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50/50">
+                                    <td class="px-4 py-3 text-slate-900 font-medium whitespace-normal">Federated Learning with Domain Shift Eraser</td>
+                                    <td class="px-4 py-3 text-primary-600">Domain Generalization</td>
+                                    <td class="px-4 py-3 text-slate-600 whitespace-normal">特征在物理上不同，尽管代表相同的底层对象。</td>
+                                    <td class="px-4 py-3 text-slate-700 whitespace-normal"><span class="font-semibold text-slate-900">域偏移消除器 (Domain Shift Eraser):</span> 在本地网络嵌入域对抗特征提取器，剥离硬件特定特征。</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50/50">
+                                    <td class="px-4 py-3 text-slate-900 font-medium whitespace-normal">FedGCS</td>
+                                    <td class="px-4 py-3 text-primary-600">Generative Client Selection</td>
+                                    <td class="px-4 py-3 text-slate-600 whitespace-normal">随着网络规模扩大，搜索最优子集是 NP-Hard。</td>
+                                    <td class="px-4 py-3 text-slate-700 whitespace-normal"><span class="font-semibold text-slate-900">生成式客户端选择:</span> 训练轻量级生成模型，输出客户端空间上的概率分布。</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50/50">
+                                    <td class="px-4 py-3 text-slate-900 font-medium whitespace-normal">FedGroup</td>
+                                    <td class="px-4 py-3 text-primary-600">Clustered FL, Data-Driven</td>
+                                    <td class="px-4 py-3 text-slate-600 whitespace-normal">在不访问本地数据的情况下识别客户端集群。</td>
+                                    <td class="px-4 py-3 text-slate-700 whitespace-normal"><span class="font-semibold text-slate-900">分解数据驱动度量:</span> 基于上传参数更新的余弦相似度在聚合前对客户端聚类。</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50/50">
+                                    <td class="px-4 py-3 text-slate-900 font-medium whitespace-normal">FedTuneFM</td>
+                                    <td class="px-4 py-3 text-primary-600">Foundation Models, Adaptive Compression</td>
+                                    <td class="px-4 py-3 text-slate-600 whitespace-normal">对具有不同注意力敏感度的层应用统一 LoRA 秩。</td>
+                                    <td class="px-4 py-3 text-slate-700 whitespace-normal"><span class="font-semibold text-slate-900">自适应压缩与注意力:</span> 基于本地输入的注意力映射方差动态改变适配器矩阵的秩。</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50/50">
+                                    <td class="px-4 py-3 text-slate-900 font-medium whitespace-normal">FedsId</td>
+                                    <td class="px-4 py-3 text-primary-600">Medical Image Classification</td>
+                                    <td class="px-4 py-3 text-slate-600 whitespace-normal">硬标签迫使网络对特定标注者偏差过拟合。</td>
+                                    <td class="px-4 py-3 text-slate-700 whitespace-normal"><span class="font-semibold text-slate-900">共享标签分布:</span> 通过共享全局标签分布先验软化真值标签，平滑标注差异。</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50/50">
+                                    <td class="px-4 py-3 text-slate-900 font-medium whitespace-normal">GPAFed</td>
+                                    <td class="px-4 py-3 text-primary-600">Gradient Projection-Guided Aggregation</td>
+                                    <td class="px-4 py-3 text-slate-600 whitespace-normal">平均正交梯度时全局模型丢失信息。</td>
+                                    <td class="px-4 py-3 text-slate-700 whitespace-normal"><span class="font-semibold text-slate-900">梯度投影引导策略:</span> 将冲突的局部梯度投影到共享正交平面以保留方向幅度。</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <hr class="border-slate-100 my-10">
+
+            <!-- Section 5 -->
+            <section id="sec-5" class="mb-16 scroll-mt-24">
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-primary-100 text-primary-700 font-bold">5</span>
+                    <h2 class="text-2xl font-bold text-slate-900">Category III: 系统鲁棒性、隐私保护与控制</h2>
+                </div>
+                <p class="text-slate-700 leading-relaxed mb-8">联邦环境本质上是不可信的。数据与计算的解耦引入了数据投毒、恶意干扰和意外记忆的向量。此外，物理网络的现实意味着设备经常掉线，这需要鲁棒的框架在深度的系统波动下维持分析完整性。</p>
+
+                <div id="sec-5-1" class="mb-8 scroll-mt-24">
+                    <h3 class="text-xl font-bold text-slate-800 mb-4 border-l-4 border-primary-500 pl-3">5.1 设备可靠性评估与陈旧梯度整合</h3>
+                    <div class="prose prose-slate max-w-none text-slate-700">
+                        <p>“掉队者”会瘫痪同步 FL 协议。<strong class="text-slate-900">FLUDE</strong> 框架严格根据历史行为评估设备可靠性，而不引入额外的探测开销，将可靠性定义为成功完成训练的连续概率分布。通过结合感知陈旧度策略，服务器选择性地分发模型。针对异步环境，<strong class="text-slate-900">FedASMU</strong> 抛弃同步屏障，在更新到达时调整学习率衰减以抵消陈旧度。</p>
+                    </div>
+                </div>
+
+                <div id="sec-5-2" class="mb-8 scroll-mt-24">
+                    <h3 class="text-xl font-bold text-slate-800 mb-4 border-l-4 border-primary-500 pl-3">5.2 隐私保护、机器遗忘与拜占庭共识</h3>
+                    <div class="prose prose-slate max-w-none text-slate-700">
+                        <p>高级梯度反演攻击可以重建原始数据。<strong class="text-slate-900">SecEmb</strong> 展示了稀疏感知安全聚合，确保服务器对项目索引的信息一无所知。<strong class="text-slate-900">Private FL with Dynamic Power Control</strong> 利用物理传输功率控制，将无线信道噪声转化为差分隐私掩码。</p>
+                        <p>面对 FDI 攻击扭曲全局模型，物理传感器网络中的 <strong class="text-slate-900">分布式状态估计 (DSE)</strong> 利用平均共识协议过滤异常。此外，“被遗忘权”促生了“联邦机器遗忘”。<strong class="text-slate-900">Unlearning during Learning</strong> 提出通过在前向传递期间持续更新影响矩阵，实现瞬时影响抵消。针对生成模型易记忆样本的问题，<strong class="text-slate-900">PRISM</strong> 采用了动态校准高斯噪声的改进随机掩码。</p>
+                    </div>
+                </div>
+
+                <div id="sec-5-3" class="scroll-mt-24">
+                    <h3 class="text-xl font-bold text-slate-800 mb-4 flex items-center gap-2">
+                        <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M3 14h18m-9-4v8m-7 0h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                        5.3 文献提取：鲁棒性与隐私
+                    </h3>
+                    <div class="table-wrap overflow-x-auto border border-slate-200 rounded-xl shadow-sm">
+                        <table class="min-w-full text-left text-sm whitespace-nowrap">
+                            <thead class="text-slate-600 bg-slate-50 border-b border-slate-200">
+                                <tr>
+                                    <th class="px-4 py-3 font-semibold min-w-[200px]">Paper Title</th>
+                                    <th class="px-4 py-3 font-semibold min-w-[150px]">Keywords</th>
+                                    <th class="px-4 py-3 font-semibold min-w-[250px]">Motivation / Challenge</th>
+                                    <th class="px-4 py-3 font-semibold min-w-[200px]">Method & Innovation</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-200 bg-white">
+                                <tr class="hover:bg-slate-50/50">
+                                    <td class="px-4 py-3 text-slate-900 font-medium whitespace-normal">A Robust Federated Learning Framework for Undependable Devices... (FLUDE)</td>
+                                    <td class="px-4 py-3 text-primary-600">Undependable Devices, Staleness, Scale</td>
+                                    <td class="px-4 py-3 text-slate-600 whitespace-normal">资源浪费在断线节点并整合高度陈旧的破坏性梯度。</td>
+                                    <td class="px-4 py-3 text-slate-700 whitespace-normal"><span class="font-semibold text-slate-900">FLUDE；历史行为评估:</span> 基于历史行为定义数学可靠性分数，选择性分发模型。</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50/50">
+                                    <td class="px-4 py-3 text-slate-900 font-medium whitespace-normal">Consensus-Based Algorithms for Distributed Network-State...</td>
+                                    <td class="px-4 py-3 text-primary-600">FDI Attacks, Target Tracking, DSE</td>
+                                    <td class="px-4 py-3 text-slate-600 whitespace-normal">对抗节点可注入错误数据扭曲雷达跟踪网络。</td>
+                                    <td class="px-4 py-3 text-slate-700 whitespace-normal"><span class="font-semibold text-slate-900">混合共识方法；DSE:</span> 利用由节点度限制的平均共识协议补偿 FDI 误差。</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50/50">
+                                    <td class="px-4 py-3 text-slate-900 font-medium whitespace-normal">SecEmb: Sparsity-Aware Secure Federated Learning...</td>
+                                    <td class="px-4 py-3 text-primary-600">Recommender Systems, Secure Aggregation</td>
+                                    <td class="px-4 py-3 text-slate-600 whitespace-normal">推荐系统即使稀疏化也会暴露项目索引。</td>
+                                    <td class="px-4 py-3 text-slate-700 whitespace-normal"><span class="font-semibold text-slate-900">无损安全嵌入检索:</span> 客户端在中心服务器完全不透明的情况下下载/上传嵌入。</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50/50">
+                                    <td class="px-4 py-3 text-slate-900 font-medium whitespace-normal">A Survey on Federated Unlearning...</td>
+                                    <td class="px-4 py-3 text-primary-600">Machine Unlearning, Right to be Forgotten</td>
+                                    <td class="px-4 py-3 text-slate-600 whitespace-normal">在不重新训练的情况下删除深度神经网络中的影响。</td>
+                                    <td class="px-4 py-3 text-slate-700 whitespace-normal"><span class="font-semibold text-slate-900">梯度上升；影响函数:</span> 以数学方式分离并从全局状态减去特定客户端的历史梯度轨迹。</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50/50">
+                                    <td class="px-4 py-3 text-slate-900 font-medium whitespace-normal">PRISM: Privacy-Preserving Improved Stochastic Masking...</td>
+                                    <td class="px-4 py-3 text-primary-600">Generative Models, Stochastic Masking</td>
+                                    <td class="px-4 py-3 text-slate-600 whitespace-normal">GAN 和 Diffusion 模型精确记忆并复述训练样本。</td>
+                                    <td class="px-4 py-3 text-slate-700 whitespace-normal"><span class="font-semibold text-slate-900">改进的随机掩码:</span> 应用根据生成器损失敏感度动态缩放的校准高斯噪声。</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50/50">
+                                    <td class="px-4 py-3 text-slate-900 font-medium whitespace-normal">Private FL with Dynamic Power Control...</td>
+                                    <td class="px-4 py-3 text-primary-600">Over-the-Air Computation, Power Control</td>
+                                    <td class="px-4 py-3 text-slate-600 whitespace-normal">无需复杂的密码学开销保护物理层传输。</td>
+                                    <td class="px-4 py-3 text-slate-700 whitespace-normal"><span class="font-semibold text-slate-900">非相干空中计算 (Over-the-Air Computation):</span> 动态控制物理传输功率，利用信道噪声作为天然隐私掩码。</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50/50">
+                                    <td class="px-4 py-3 text-slate-900 font-medium whitespace-normal">Efficient Sparse Secure Aggregation...</td>
+                                    <td class="px-4 py-3 text-primary-600">Secure Aggregation, Cryptography</td>
+                                    <td class="px-4 py-3 text-slate-600 whitespace-normal">当模型高度稀疏且动态时 SecAgg 协议失效。</td>
+                                    <td class="px-4 py-3 text-slate-700 whitespace-normal"><span class="font-semibold text-slate-900">稀疏安全聚合:</span> 利用专为稀疏矩阵构建的同态加密，跳过零值加密。</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50/50">
+                                    <td class="px-4 py-3 text-slate-900 font-medium whitespace-normal">Fed-CAD</td>
+                                    <td class="px-4 py-3 text-primary-600">Local Differential Privacy, Correlation</td>
+                                    <td class="px-4 py-3 text-slate-600 whitespace-normal">平衡强大的数学隐私保证与模型收敛效用。</td>
+                                    <td class="px-4 py-3 text-slate-700 whitespace-normal"><span class="font-semibold text-slate-900">相关性感知的自适应 LDP:</span> 识别特征相关性，战略性地向高度相关的权重注入低方差噪声。</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50/50">
+                                    <td class="px-4 py-3 text-slate-900 font-medium whitespace-normal">Unlearning during Learning...</td>
+                                    <td class="px-4 py-3 text-primary-600">Efficient Unlearning, Real-time</td>
+                                    <td class="px-4 py-3 text-slate-600 whitespace-normal">事后遗忘需要计算海森矩阵，计算成本高昂。</td>
+                                    <td class="px-4 py-3 text-slate-700 whitespace-normal"><span class="font-semibold text-slate-900">边学边忘 (UDL):</span> 在前向传播中持续更新影响矩阵，实现瞬间抵消。</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50/50">
+                                    <td class="px-4 py-3 text-slate-900 font-medium whitespace-normal">A Generalized Hierarchical FL Framework...</td>
+                                    <td class="px-4 py-3 text-primary-600">Hierarchical FL, Theoretical Guarantees</td>
+                                    <td class="px-4 py-3 text-slate-600 whitespace-normal">扁平拓扑在中央服务器引起严重的通信瓶颈。</td>
+                                    <td class="px-4 py-3 text-slate-700 whitespace-normal"><span class="font-semibold text-slate-900">分层聚合拓扑:</span> 在强凸假设下，建立严格的多层聚合理论收敛界限。</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50/50">
+                                    <td class="px-4 py-3 text-slate-900 font-medium whitespace-normal">Consensus and Cooperation in Networked Multi-Agent Systems</td>
+                                    <td class="px-4 py-3 text-primary-600">Multi-Agent Systems, Consensus</td>
+                                    <td class="px-4 py-3 text-slate-600 whitespace-normal">去中心化自治智能体必须在无领导者的情况下对状态达成一致。</td>
+                                    <td class="px-4 py-3 text-slate-700 whitespace-normal"><span class="font-semibold text-slate-900">代数图论；共识:</span> 利用网络图的拉普拉斯矩阵保证渐进的状态一致性。</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50/50">
+                                    <td class="px-4 py-3 text-slate-900 font-medium whitespace-normal">Enhanced FL with Adaptive Block-wise Regularization...</td>
+                                    <td class="px-4 py-3 text-primary-600">Knowledge Distillation, Regularization</td>
+                                    <td class="px-4 py-3 text-slate-600 whitespace-normal">恶意客户端可能通过微妙的投毒缓慢降低模型性能。</td>
+                                    <td class="px-4 py-3 text-slate-700 whitespace-normal"><span class="font-semibold text-slate-900">块级正则化 (Block-wise Regularization):</span> 利用干净代理数据集应用知识蒸馏，从数学上验证块级完整性。</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <hr class="border-slate-100 my-10">
+
+            <!-- Section 6 -->
+            <section id="sec-6" class="mb-16 scroll-mt-24 bg-slate-50 p-6 md:p-8 rounded-2xl border border-slate-200">
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-primary-600 text-white font-bold">6</span>
+                    <h2 class="text-2xl font-bold text-slate-900">多维度深层洞察与演进趋势</h2>
+                </div>
+                <p class="text-slate-700 mb-8">对这八十余种方法的收敛性进行评估，揭示了去中心化智能架构演进中深刻的潜在轨迹。</p>
+                
+                <div class="space-y-6">
+                    <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-100">
+                        <h3 class="text-lg font-bold text-slate-900 mb-3">6.1 压缩与参数高效微调 (PEFT) 的共生</h3>
+                        <p class="text-slate-700 text-sm leading-relaxed">当前的文献表明了通信压缩与架构适配在系统层面上的融合。像 <strong class="text-slate-900">FedICU</strong> 这样的框架利用重要性感知掩码仅更新关键的 LoRA 参数。第二层面的暗示是，未来的联邦学习架构将不再致力于压缩密集的全局梯度，而是原生性地仅在统计上显著的<strong class="text-primary-600">发散向量（Sparse Divergence Vectors）</strong>层面进行网络流量交互。</p>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-100">
+                        <h3 class="text-lg font-bold text-slate-900 mb-3">6.2 从被动等待到预测性网络拓扑的演变</h3>
+                        <p class="text-slate-700 text-sm leading-relaxed">早期的联邦学习协议具有高度的被动性。现代范式已转向积极的预测性控制。系统主动对节点的历史可靠性进行画像，使用加权衰减函数预测提供最高梯度效用的客户端。这将联邦学习从一个静态的计算问题，转变为一个<strong class="text-primary-600">运筹学调度优化问题</strong>，联合优化网络流量、设备电池寿命和数据熵。</p>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-100">
+                        <h3 class="text-lg font-bold text-slate-900 mb-3">6.3 边缘侧的硬件-算法协同设计与计算液化</h3>
+                        <p class="text-slate-700 text-sm leading-relaxed">边缘硬件具有统一精度的时代已经结束。<strong class="text-slate-900">HAT</strong> 框架引入的设备-云协同推理表明，计算不再严格绑定在“边缘”或“云端”。该架构消除了“客户端”和“服务器”之间的二元界限，创造了一个<strong class="text-primary-600">流动的计算连续体 (Liquid Computational Continuum)</strong>，张量根据实时带宽和约束在推理过程中物理移动。</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 7 -->
+            <section id="sec-7" class="scroll-mt-24">
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-slate-900 text-white font-bold">7</span>
+                    <h2 class="text-2xl font-bold text-slate-900">结论性综合 (Concluding Synthesis)</h2>
+                </div>
+                <div class="prose prose-slate max-w-none text-slate-700 leading-relaxed space-y-4">
+                    <p>对上述研究语料的详尽评估表明，联邦学习已经超越了其作为简单隐私保护平均机制的起源。它现在是一个高度复杂的跨学科框架，需要在统计学、物理层网络和密码学等多个维度进行持续优化。</p>
+                    <p>双层累积量化压缩和基于投票的网络内共识聚合的结合，中和了通信瓶颈。同态加密类别均衡采样和通过边缘动态生成合成数据，为应对统计异质性提供了数学解决方案。随着基础模型挑战能力极限，架构将向双层个性化和推测性的端云协作演进。</p>
+                    <p class="font-semibold text-slate-900 text-lg border-l-4 border-primary-600 pl-4 mt-6">
+                        最终，去中心化智能的未来，将取决于能否通过算法化手段，将海量不可靠的异构边缘设备无缝编排成一个单一的、极具韧性的认知网络。
+                    </p>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- 底部 -->
+    <footer class="bg-white border-t border-slate-200 py-8 mt-12">
+        <div class="max-w-7xl mx-auto px-4 text-center text-slate-500 text-sm">
+            &copy; 2026 Decentralized Intelligence Report. Generated via Advanced Paradigms Analysis.
+        </div>
+    </footer>
+
+    <!-- JS 交互 (滚动侦测高亮侧边栏) -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('#toc-nav a');
+
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px 0px -60% 0px',
+                threshold: 0
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const id = entry.target.getAttribute('id');
+                        // 移除所有激活状态
+                        navLinks.forEach(link => {
+                            link.classList.remove('text-primary-600', 'font-bold', 'bg-slate-50');
+                            link.classList.add('text-slate-600');
+                        });
+                        // 激活当前视口中的章节链接
+                        const activeLink = document.querySelector(`#toc-nav a[href="#${id}"]`);
+                        if (activeLink) {
+                            activeLink.classList.remove('text-slate-600', 'text-slate-500');
+                            activeLink.classList.add('text-primary-600', 'font-bold', 'bg-slate-50');
+                        }
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(sec => observer.observe(sec));
+        });
+    </script>
+</body>
+</html>
